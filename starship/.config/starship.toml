@@ -12,6 +12,7 @@ $git_status\
 [](fg:yellow bg:green)\
 $c\
 $rust\
+$cpp\
 $golang\
 $nodejs\
 $php\
@@ -20,11 +21,10 @@ $kotlin\
 $haskell\
 $python\
 [](fg:green bg:sapphire)\
-$conda\
+$cmd_duration\
 [](fg:sapphire bg:lavender)\
 $time\
 [ ](fg:lavender)\
-$cmd_duration\
 $line_break\
 $character"""
 
@@ -98,6 +98,11 @@ symbol = ""
 style = "bg:green"
 format = '[[ $symbol( $version) ](fg:crust bg:green)]($style)'
 
+[cpp]
+symbol = ""
+style = "bg:green"
+format = '[[ $symbol( $version) ](fg:crust bg:green)]($style)'
+
 [golang]
 symbol = ""
 style = "bg:green"
@@ -158,11 +163,11 @@ vimcmd_replace_symbol = '[❮](bold fg:lavender)'
 vimcmd_visual_symbol = '[❮](bold fg:yellow)'
 
 [cmd_duration]
-show_milliseconds = true
-format = " in $duration "
-style = "bg:lavender"
+show_milliseconds = false
+format = '[  $duration ]($style)'
+style = "fg:crust bg:sapphire"
 disabled = false
-show_notifications = true
+show_notifications = false
 min_time_to_notify = 45000
 
 [palettes.catppuccin_mocha]
