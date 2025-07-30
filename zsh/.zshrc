@@ -3,9 +3,10 @@ eval "$(starship init zsh)"
 plugins=(git)
 source <(fzf --zsh)
 
-alias ls='exa -X --color=always --icons=always'
-alias ll='exa -al'
+alias ls='eza -X --color=always --icons=always'
+alias ll='eza -al'
 alias vim='nvim'
+alias cat='bat'
 alias zen='zen-browser'
 alias nvimf='nvim $(fzf --preview="bat --color=always {}")'
 
