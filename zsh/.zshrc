@@ -13,6 +13,7 @@ alias nvimf='nvim $(fzf --preview="bat --color=always {}")'
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 export BAT_THEME="Catppuccin Mocha"
+export EDITOR='nvim'
 
 export _ZO_DATA_DIR="/home/jc/.local/share"
 export _ZO_ECHO="1"
