@@ -180,7 +180,7 @@ layout {
                 command_git_branch_rendermode  "static"
 
                 datetime        "#[bg=$surface0,fg=$text,bold] {format} "
-                datetime_format "%b%d-%H:%M"
+                datetime_format "%b %d - %H:%M"
                 datetime_timezone "Asia/Taipei"
             }
         }
