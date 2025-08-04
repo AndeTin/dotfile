@@ -233,12 +233,12 @@ vim.api.nvim_create_autocmd('TermOpen', {
   end,
 })
 -- Quick access to terminal
-vim.keymap.set('n', '<leader>o', function()
+vim.keymap.set('n', '<leader>p', function()
   vim.cmd.vnew()
   vim.cmd.term()
   vim.cmd.wincmd 'J'
   vim.api.nvim_win_set_height(0, 10)
-end, { desc = '[O]pen Terminal' })
+end, { desc = 'O[p]en Terminal' })
 -- Leave terminal mode using double <Esc>
 vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 
