@@ -10,8 +10,10 @@ hyprwayland-scanner-git 0.4.5.r0.gfcca0c6-1
 hyprwayland-scanner-git-debug 0.4.5.r0.gfcca0c6-1
 lazydocker 0.24.1-1
 lazydocker-debug 0.24.1-1
-lazysql-debug 0.3.4-1
 noto-fonts-tc 2:20201206-1
+opencode-bin 0.3.132-1
+paru 2.1.0-1
+paru-debug 2.1.0-1
 python-mock 5.2.0-1
 python310 3.10.18-1
 timeshift-autosnap 0.9-1
@@ -22,4 +24,4 @@ xrdp 0.10.4.1-1
 xrdp-debug 0.10.4.1-1
 yay 12.5.0-1
 yay-debug 12.5.0-1
-zen-browser-bin 1.14.9b-2
+zen-browser-bin 1.14.10b-1
