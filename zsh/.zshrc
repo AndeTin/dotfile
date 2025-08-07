@@ -2,6 +2,8 @@ eval "$(starship init zsh)"
 
 plugins=(git)
 source <(fzf --zsh)
+source ~/.zsh-syntax-highlighting/themes/catppuccin_mocha-zsh-syntax-highlighting.zsh
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 alias ls='eza -X --color=always --icons=always'
 alias ll='eza -al'
