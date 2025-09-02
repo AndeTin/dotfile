@@ -3,9 +3,8 @@ cmatrix-git 1.2.r119.g5c082c6-1
 hyprlang-git 0.6.3.r3.gcee0145-1
 hyprutils-git 0.8.1.r3.gbcabcba-1
 hyprwayland-scanner-git 0.4.5.r0.gfcca0c6-1
-lazydocker 0.24.1-1
 noto-fonts-tc 2:20201206-1
-opencode-bin 0.4.12-1
+opencode-bin 0.6.3-1
 paru 2.1.0-1
 python310 3.10.18-2
 timeshift-autosnap 0.9-1
@@ -14,4 +13,4 @@ warp-terminal v0.2025.07.23.08.12.stable_02-1
 xrdp 0.10.4.1-1
 yay 12.5.0-1
 yay-debug 12.5.0-1
-zen-browser-bin 1.14.11b-1
+zen-browser-bin 1.15.2b-1
