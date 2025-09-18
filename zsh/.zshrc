@@ -11,7 +11,7 @@ XMODIFIERS=@im=fcitx
 SDL_IM_MODULE=fcitx
 GLFW_IM_MODULE=ibus
 
-alias ls='eza -X --color=always --icons=always'
+alias ls='eza -F --color=always --icons=always'
 alias ll='eza -al'
 alias vim='nvim'
 alias cat='bat'
@@ -35,7 +35,11 @@ export FZF_DEFAULT_OPTS=" \
 --color=selected-bg:#45475A \
 --color=border:#6C7086,label:#CDD6F4"
 
+export ANDROID_HOME=/opt/android-sdk
+export PATH=$PATH:$ANDROID_HOME/tools
+export PATH=$PATH:$ANDROID_HOME/platform-tools
+
 eval "$(zoxide init zsh)"
 
-echo "Welcome back JC 🚀!"
+echo "Welcome back 🚀!"
 fastfetch
