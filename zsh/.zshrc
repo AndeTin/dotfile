@@ -10,6 +10,9 @@ QT_IM_MODULE=fcitx
 XMODIFIERS=@im=fcitx
 SDL_IM_MODULE=fcitx
 GLFW_IM_MODULE=ibus
+export XCURSOR_SIZE=48
+export XCURSOR_THEME="Bibata-Modern-Ice"
+export SYSTEMD_EDITOR=nvim
 
 alias ls='eza -F --color=always --icons=always'
 alias ll='eza -al'
