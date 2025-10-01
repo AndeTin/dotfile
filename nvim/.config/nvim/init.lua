@@ -443,7 +443,7 @@ require('lazy').setup({
       }
       require('telescope').load_extension 'harpoon'
       require('telescope').load_extension 'remote-sshfs'
-      vim.keymap.set('n', '<leader>fh', function()
+      vim.keymap.set('n', '<leader>hh', function()
         require('telescope').extensions.harpoon.marks()
       end, { desc = 'Telescope Harpoon marks' })
 
@@ -752,7 +752,13 @@ require('lazy').setup({
         'pretty-php', -- Used to format PHP code
         'clang-format', -- Used to format C/C++ code
         'beautysh', -- Used to format shell scripts
-        'pyink', -- Used to format Python code
+        'yapf', -- Used to format Python code (Google style)
+        'prettier', -- Used to format JavaScript/TypeScript code
+        'eslint_d', -- Used to lint/fix JavaScript/TypeScript code
+        'cpplint', -- Used to lint C/C++ code
+
+        'flake8', -- Used to lint Python code
+        'mypy', -- Used to lint Python code
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
@@ -793,15 +799,11 @@ require('lazy').setup({
         -- Disable "format_on_save lsp_fallback" for languages that don't
         -- have a well standardized coding style. You can add additional
         -- languages here or re-enable it for the disabled ones.
-        local disable_filetypes = { c = true, cpp = true }
-        if disable_filetypes[vim.bo[bufnr].filetype] then
-          return nil
-        else
-          return {
-            timeout_ms = 500,
-            lsp_format = 'fallback',
-          }
-        end
+        -- Enable format-on-save for all filetypes
+        return {
+          timeout_ms = 500,
+          lsp_format = 'fallback',
+        }
       end,
       formatters_by_ft = {
         lua = { 'stylua' },
@@ -810,7 +812,9 @@ require('lazy').setup({
         php = { 'pretty-php' },
         rust = { 'rustfmt' },
         sh = { 'beautysh' },
-        python = { 'pyink' },
+        python = { 'yapf' },
+        javascript = { 'prettier' },
+        typescript = { 'prettier' },
 
         -- Conform can also run multiple formatters sequentially
         -- python = { "isort", "black" },

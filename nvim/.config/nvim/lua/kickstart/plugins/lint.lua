@@ -7,6 +7,27 @@ return {
       local lint = require 'lint'
       lint.linters_by_ft = {
         markdown = { 'markdownlint' },
+        c = { 'cpplint', 'clangtidy' },
+        cpp = { 'cpplint', 'clangtidy' },
+        python = { 'flake8', 'mypy' },
+        rust = { 'clippy' },
+        javascript = { 'eslint_d' },
+        typescript = { 'eslint_d' },
+      }
+
+      -- Always pass --filter=-legal/copyright to cpplint
+      lint.linters.cpplint = {
+        cmd = 'cpplint',
+        stdin = false,
+        args = { '--filter=-legal/copyright,-whitespace/indent' },
+        stream = 'stderr',
+        ignore_exitcode = true,
+        parser = require('lint.parser').from_pattern(
+          [[(%S+):(%d+):  (.*)]],
+          { 'file', 'lnum', 'message' },
+          nil,
+          { ['severity'] = vim.diagnostic.severity.WARN }
+        ),
       }
 
       -- To allow other plugins to add linters to require('lint').linters_by_ft,
