@@ -62,6 +62,24 @@ return {
       -- lint.linters_by_ft['terraform'] = nil
       -- lint.linters_by_ft['text'] = nil
 
+      -- Diagnostics toggle state
+      vim.g.diagnostics_enabled = true
+
+      -- Toggle function
+      function ToggleDiagnostics()
+        vim.g.diagnostics_enabled = not vim.g.diagnostics_enabled
+        if vim.g.diagnostics_enabled then
+          vim.diagnostic.enable()
+          print('Diagnostics enabled')
+        else
+          vim.diagnostic.disable()
+          print('Diagnostics disabled')
+        end
+      end
+
+      -- Key binding for <leader>.
+      vim.keymap.set('n', '<leader>.', ToggleDiagnostics, { desc = '[T]oggle Diagnostics/Linter' })
+
       -- Create autocommand which carries out the actual linting
       -- on the specified events.
       local lint_augroup = vim.api.nvim_create_augroup('lint', { clear = true })
@@ -71,8 +89,11 @@ return {
           -- Only run the linter in buffers that you can modify in order to
           -- avoid superfluous noise, notably within the handy LSP pop-ups that
           -- describe the hovered symbol using Markdown.
-          if vim.bo.modifiable then
+          if vim.bo.modifiable and vim.g.diagnostics_enabled then
             lint.try_lint()
+          else
+            -- Optionally clear diagnostics when disabled
+            vim.diagnostic.reset()
           end
         end,
       })
