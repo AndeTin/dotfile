@@ -13,6 +13,8 @@ return {
       shade_terminals = true,
       start_in_insert = true,
       persist_mode = true,
+      insert_mappings = false,
+      terminal_mappings = false,
     }
   end,
 }
