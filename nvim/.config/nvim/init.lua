@@ -233,12 +233,9 @@ vim.api.nvim_create_autocmd('TermOpen', {
   end,
 })
 -- Quick access to terminal
-vim.keymap.set('n', '<leader>p', function()
-  vim.cmd.vnew()
-  vim.cmd.term()
-  vim.cmd.wincmd 'J'
-  vim.api.nvim_win_set_height(0, 10)
-end, { desc = 'O[p]en Terminal' })
+-- <leader>p is now handled by toggleterm.nvim for a popup terminal
+-- See lua/custom/plugins/toggleterm.lua for config
+
 -- Leave terminal mode using double <Esc>
 vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 
