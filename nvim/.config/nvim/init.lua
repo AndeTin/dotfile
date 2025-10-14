@@ -750,12 +750,14 @@ require('lazy').setup({
         'clang-format', -- Used to format C/C++ code
         'beautysh', -- Used to format shell scripts
         'yapf', -- Used to format Python code (Google style)
-        'prettier', -- Used to format JavaScript/TypeScript code
-        'eslint_d', -- Used to lint/fix JavaScript/TypeScript code
-        'cpplint', -- Used to lint C/C++ code
-
-        'flake8', -- Used to lint Python code
-        'mypy', -- Used to lint Python code
+'prettier', -- Used to format JavaScript/TypeScript code
+		 'eslint_d', -- Used to lint/fix JavaScript/TypeScript code
+		 'cpplint', -- Used to lint C/C++ code
+		 'ktfmt', -- Used to format Kotlin code
+		 'ktlint', -- Used to lint/format Kotlin code
+		 
+		 'flake8', -- Used to lint Python code
+		 'mypy', -- Used to lint Python code
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
@@ -802,23 +804,24 @@ require('lazy').setup({
           lsp_format = 'fallback',
         }
       end,
-      formatters_by_ft = {
-        lua = { 'stylua' },
-        c = { 'clang-format' },
-        cpp = { 'clang-format' },
-        php = { 'pretty-php' },
-        rust = { 'rustfmt' },
-        sh = { 'beautysh' },
-        python = { 'yapf' },
-        javascript = { 'prettier' },
-        typescript = { 'prettier' },
+formatters_by_ft = {
+		 lua = { 'stylua' },
+		 c = { 'clang-format' },
+		 cpp = { 'clang-format' },
+		 php = { 'pretty-php' },
+		 rust = { 'rustfmt' },
+		 sh = { 'beautysh' },
+		 python = { 'yapf' },
+		 javascript = { 'prettier' },
+		 typescript = { 'prettier' },
+		 kotlin = { 'ktfmt', 'ktlint' },
 
-        -- Conform can also run multiple formatters sequentially
-        -- python = { "isort", "black" },
-        --
-        -- You can use 'stop_after_first' to run the first available formatter from the list
-        -- javascript = { "prettierd", "prettier", stop_after_first = true },
-      },
+		 -- Conform can also run multiple formatters sequentially
+		 -- python = { "isort", "black" },
+		 --
+		 -- You can use 'stop_after_first' to run the first available formatter from the list
+		 -- javascript = { "prettierd", "prettier", stop_after_first = true },
+		 }
     },
   },
 

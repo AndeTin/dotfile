@@ -5,15 +5,16 @@ return {
     event = { 'BufReadPre', 'BufNewFile' },
     config = function()
       local lint = require 'lint'
-      lint.linters_by_ft = {
-        markdown = { 'markdownlint' },
-        c = { 'cpplint' },
-        cpp = { 'cpplint' },
-        python = { 'flake8', 'mypy' },
-        rust = { 'clippy' },
-        javascript = { 'eslint_d' },
-        typescript = { 'eslint_d' },
-      }
+lint.linters_by_ft = {
+		 markdown = { 'markdownlint' },
+		 c = { 'cpplint' },
+		 cpp = { 'cpplint' },
+		 python = { 'flake8', 'mypy' },
+		 rust = { 'clippy' },
+		 javascript = { 'eslint_d' },
+		 typescript = { 'eslint_d' },
+		 kotlin = { 'ktlint' },
+		 }
 
       -- Always pass --filter=-legal/copyright to cpplint
       lint.linters.cpplint = {
