@@ -756,9 +756,10 @@ require('lazy').setup({
 		 'ktfmt', -- Used to format Kotlin code
 		 'ktlint', -- Used to lint/format Kotlin code
 		 
-		 'flake8', -- Used to lint Python code
-		 'mypy', -- Used to lint Python code
-      })
+ 		 'flake8', -- Used to lint Python code
+ 		 'mypy', -- Used to lint Python code
+ 		 'markdownlint', -- Used to lint Markdown files
+       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
       require('mason-lspconfig').setup {

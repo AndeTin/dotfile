@@ -1,8 +1,9 @@
 # Application bindings
+$Terminal = ghostty
 $terminal = uwsm-app -- $TERMINAL
 $browser = omarchy-launch-browser
 
-bindd = SUPER, RETURN, Terminal, exec, ghostty --working-directory="$(omarchy-cmd-terminal-cwd)"
+bind = SUPER, RETURN, exec, ghostty --working-directory="$(omarchy-cmd-terminal-cwd)"
 bindd = SUPER SHIFT, F, File manager, exec, uwsm-app -- nautilus --new-window
 bindd = SUPER SHIFT, B, Browser, exec, $browser
 bindd = SUPER SHIFT ALT, B, Browser (private), exec, $browser --private
