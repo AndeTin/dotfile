@@ -1,10 +1,9 @@
 return {
   'NickvanDyke/opencode.nvim',
   dependencies = { 'folke/snacks.nvim' },
-  ---@type opencode.Config
-  opts = {
-    -- Your configuration, if any
-  },
+  config = function()
+    -- opencode doesn't require setup, just load it
+  end,
   -- stylua: ignore
   keys = {
     { '<leader>ot', function() require('opencode').toggle() end, desc = 'Toggle embedded opencode', },
