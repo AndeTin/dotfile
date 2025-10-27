@@ -20,6 +20,8 @@ alias vim='nvim'
 alias cat='bat'
 alias zen='zen-browser'
 alias nvimf='nvim $(fzf --preview="bat --color=always {}")'
+alias lg='lazygit'
+alias ld='lazydocker'
 
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
