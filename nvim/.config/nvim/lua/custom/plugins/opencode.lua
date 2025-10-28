@@ -2,7 +2,7 @@ return {
   'NickvanDyke/opencode.nvim',
   dependencies = { 'folke/snacks.nvim' },
   config = function()
-    -- opencode doesn't require setup, just load it
+    vim.g.opencode_opts = { provider = 'snacks' }
   end,
   -- stylua: ignore
   keys = {
