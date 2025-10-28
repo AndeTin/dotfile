@@ -750,16 +750,16 @@ require('lazy').setup({
         'clang-format', -- Used to format C/C++ code
         'beautysh', -- Used to format shell scripts
         'yapf', -- Used to format Python code (Google style)
-'prettier', -- Used to format JavaScript/TypeScript code
-		 'eslint_d', -- Used to lint/fix JavaScript/TypeScript code
-		 'cpplint', -- Used to lint C/C++ code
-		 'ktfmt', -- Used to format Kotlin code
-		 'ktlint', -- Used to lint/format Kotlin code
-		 
- 		 'flake8', -- Used to lint Python code
- 		 'mypy', -- Used to lint Python code
- 		 'markdownlint', -- Used to lint Markdown files
-       })
+        'prettier', -- Used to format JavaScript/TypeScript code
+        'eslint_d', -- Used to lint/fix JavaScript/TypeScript code
+        'cpplint', -- Used to lint C/C++ code
+        'ktfmt', -- Used to format Kotlin code
+        'ktlint', -- Used to lint/format Kotlin code
+
+        'flake8', -- Used to lint Python code
+        'mypy', -- Used to lint Python code
+        'markdownlint', -- Used to lint Markdown files
+      })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
       require('mason-lspconfig').setup {
@@ -805,24 +805,24 @@ require('lazy').setup({
           lsp_format = 'fallback',
         }
       end,
-formatters_by_ft = {
-		 lua = { 'stylua' },
-		 c = { 'clang-format' },
-		 cpp = { 'clang-format' },
-		 php = { 'pretty-php' },
-		 rust = { 'rustfmt' },
-		 sh = { 'beautysh' },
-		 python = { 'yapf' },
-		 javascript = { 'prettier' },
-		 typescript = { 'prettier' },
-		 kotlin = { 'ktfmt', 'ktlint' },
+      formatters_by_ft = {
+        lua = { 'stylua' },
+        c = { 'clang-format' },
+        cpp = { 'clang-format' },
+        php = { 'pretty-php' },
+        rust = { 'rustfmt' },
+        sh = { 'beautysh' },
+        python = { 'yapf' },
+        javascript = { 'prettier' },
+        typescript = { 'prettier' },
+        kotlin = { 'ktfmt', 'ktlint' },
 
-		 -- Conform can also run multiple formatters sequentially
-		 -- python = { "isort", "black" },
-		 --
-		 -- You can use 'stop_after_first' to run the first available formatter from the list
-		 -- javascript = { "prettierd", "prettier", stop_after_first = true },
-		 }
+        -- Conform can also run multiple formatters sequentially
+        -- python = { "isort", "black" },
+        --
+        -- You can use 'stop_after_first' to run the first available formatter from the list
+        -- javascript = { "prettierd", "prettier", stop_after_first = true },
+      },
     },
   },
 
@@ -951,41 +951,7 @@ formatters_by_ft = {
   {
     { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
 
-    'echasnovski/mini.nvim',
-    config = function()
-      -- Better Around/Inside textobjects
-      --
-      -- Examples:
-      --  - va)  - [V]isually select [A]round [)]paren
-      --  - yinq - [Y]ank [I]nside [N]ext [Q]uote
-      --  - ci'  - [C]hange [I]nside [']quote
-      require('mini.ai').setup { n_lines = 500 }
 
-      -- Add/delete/replace surroundings (brackets, quotes, etc.)
-      --
-      -- - saiw) - [S]urround [A]dd [I]nner [W]ord [)]Paren
-      -- - sd'   - [S]urround [D]elete [']quotes
-      -- - sr)'  - [S]urround [R]eplace [)] [']
-      require('mini.surround').setup()
-
-      -- Simple and easy statusline.
-      --  You could remove this setup call if you don't like it,
-      --  and try some other statusline plugin
-      local statusline = require 'mini.statusline'
-      -- set use_icons to true if you have a Nerd Font
-      statusline.setup { use_icons = vim.g.have_nerd_font }
-
-      -- You can configure sections in the statusline by overriding their
-      -- default behavior. For example, here we set the section for
-      -- cursor location to LINE:COLUMN
-      ---@diagnostic disable-next-line: duplicate-set-field
-      statusline.section_location = function()
-        return '%2l:%-2v'
-      end
-
-      -- ... and there is more!
-      --  Check out: https://github.com/echasnovski/mini.nvim
-    end,
   },
   { -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
