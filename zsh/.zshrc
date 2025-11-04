@@ -1,7 +1,10 @@
 eval "$(starship init zsh)"
 
 plugins=(git)
+
+# Set up fzf key bindings and fuzzy completion
 source <(fzf --zsh)
+
 # source ~/.zsh-syntax-highlighting/themes/catppuccin_mocha-zsh-syntax-highlighting.zsh
 # source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 # 🛠 Fix broken default keymap
