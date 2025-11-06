@@ -2,6 +2,7 @@ eval "$(starship init zsh)"
 
 plugins=(git)
 
+plugins=(git fzf)
 # Set up fzf key bindings and fuzzy completion
 source <(fzf --zsh)
 
@@ -67,6 +68,18 @@ export PATH=$PATH:$ANDROID_HOME/tools
 export PATH=$PATH:$ANDROID_HOME/platform-tools
 
 eval "$(zoxide init zsh)"
+# --- FZF setup (place this at the END of ~/.zshrc) ---
+
+# Optional visual options
+export FZF_DEFAULT_OPTS='--height 40% --reverse --border'
+
+# Load completion and keybindings (order matters)
+if [[ -f /usr/share/fzf/completion.zsh ]]; then
+  source /usr/share/fzf/completion.zsh
+fi
+if [[ -f /usr/share/fzf/key-bindings.zsh ]]; then
+  source /usr/share/fzf/key-bindings.zsh
+fi
 
 echo "Welcome back 🚀!"
 fastfetch
