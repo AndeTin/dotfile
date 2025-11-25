@@ -1,30 +1,28 @@
 # --- Starship Prompt ---
 eval "$(starship init zsh)"
+
 # --- Znap Plugin Manager ---
 [[ -r ~/Repos/znap/znap.zsh ]] || \
     git clone --depth 1 -- https://github.com/marlonrichert/zsh-snap.git ~/Repos/znap
 source ~/Repos/znap/znap.zsh
+
 # --- Zsh Plugins ---
 source ~/Repos/zsh-autocomplete/zsh-autocomplete.plugin.zsh
 source ~/Repos/zsh-autoswitch-virtualenv/autoswitch_virtualenv.plugin.zsh
 source ~/Repos/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
 # --- FZF Setup ---
 plugins=(git fzf)
-source <(fzf --zsh)
-# Load FZF completion and keybindings (order matters)
-if [[ -f /usr/share/fzf/completion.zsh ]]; then
-  source /usr/share/fzf/completion.zsh
-fi
-if [[ -f /usr/share/fzf/key-bindings.zsh ]]; then
-  source /usr/share/fzf/key-bindings.zsh
-fi
+
 # --- Zoxide ---
 eval "$(zoxide init zsh)"
+
 # --- Custom Functions ---
 zi() {
     cd "$(zoxide query -i)"
 }
 zle -N zi
+
 # --- Key Bindings ---
 bindkey -e   # Emacs-style bindings
 # Cursor movement and editing
@@ -42,8 +40,9 @@ bindkey '^F' zi                # ^F now runs zi (overrides forward-char)
 bindkey '^P' up-line-or-history
 bindkey '^N' down-line-or-history
 bindkey '^[[3~' delete-char
-bindkey '^I' menu-complete
+# bindkey '^I' menu-complete  # Disabled to allow fzf tab completion
 bindkey "$terminfo[kcbt]" reverse-menu-complete
+
 # --- Environment Variables ---
 export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
@@ -63,6 +62,7 @@ export _ZO_DATA_DIR="/home/jc/.local/share"
 export _ZO_ECHO="0"
 export _ZO_MAXAGE="100"
 export _ZO_RESOLVE_SYMLINKS="1"
+
 # --- FZF Options ---
 export FZF_DEFAULT_OPTS=" \
 --height 40% --reverse --border \
@@ -71,10 +71,12 @@ export FZF_DEFAULT_OPTS=" \
 --color=marker:#B4BEFE,fg+:#CDD6F4,prompt:#CBA6F7,hl+:#F38BA8 \
 --color=selected-bg:#45475A \
 --color=border:#6C7086,label:#CDD6F4"
+
 # --- Android SDK ---
 export ANDROID_HOME=/opt/android-sdk
 export PATH=$PATH:$ANDROID_HOME/tools
 export PATH=$PATH:$ANDROID_HOME/platform-tools
+
 # --- Aliases ---
 alias ls='eza -F --color=always --icons=always'
 alias ll='eza -al'
@@ -84,6 +86,10 @@ alias zen='zen-browser'
 alias nvimf='nvim $(fzf --preview="bat --color=always {}")'
 alias lg='lazygit'
 alias ld='lazydocker'
+
 # --- Welcome Message ---
 echo "Welcome back 🚀!"
 fastfetch
+
+# --- FZF Integration (must be last for tab completion reliability) ---
+source <(fzf --zsh)
