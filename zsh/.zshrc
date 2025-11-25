@@ -11,14 +11,20 @@ source ~/Repos/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 # --- FZF Setup ---
 plugins=(git fzf)
 source <(fzf --zsh)
-# Load FZF completion and keybindings (order matters: after zsh-autocomplete)
+# Load FZF completion and keybindings (order matters)
 if [[ -f /usr/share/fzf/completion.zsh ]]; then
   source /usr/share/fzf/completion.zsh
 fi
 if [[ -f /usr/share/fzf/key-bindings.zsh ]]; then
   source /usr/share/fzf/key-bindings.zsh
 fi
-# FZF's key-bindings will set ^R to fzf-history-search
+# --- Zoxide ---
+eval "$(zoxide init zsh)"
+# --- Custom Functions ---
+zi() {
+    cd "$(zoxide query -i)"
+}
+zle -N zi
 # --- Key Bindings ---
 bindkey -e   # Emacs-style bindings
 # Cursor movement and editing
@@ -35,7 +41,6 @@ bindkey '^B' backward-char
 bindkey '^F' zi                # ^F now runs zi (overrides forward-char)
 bindkey '^P' up-line-or-history
 bindkey '^N' down-line-or-history
-# REMOVE this line: bindkey '^R' history-incremental-search-backward
 bindkey '^[[3~' delete-char
 bindkey '^I' menu-complete
 bindkey "$terminfo[kcbt]" reverse-menu-complete
