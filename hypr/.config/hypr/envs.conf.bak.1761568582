@@ -1,6 +1,0 @@
-# Extra env variables
-env = TERMINAL,ghostty
-# env = MY_GLOBAL_ENV,setting
-
-env = XCURSOR_THEME,Bibata-Modern-Ice
-env = XCURSOR_SIZE,40

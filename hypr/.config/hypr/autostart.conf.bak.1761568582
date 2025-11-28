@@ -1,3 +1,0 @@
-# Extra autostart processes
-# exec-once = uwsm app -- my-service
-exec-once = sh -c "sleep 0.5 && hyprctl setcursor Bibata-Modern-Ice 40"
