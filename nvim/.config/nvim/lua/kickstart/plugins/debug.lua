@@ -24,6 +24,7 @@ return {
     -- Add your own debuggers here
     'leoluz/nvim-dap-go',
     'sakhnik/nvim-gdb',
+    'julianolf/nvim-dap-lldb',
   },
   keys = {
     -- Basic debugging keymaps, feel free to change to your liking!
@@ -101,6 +102,65 @@ return {
       },
     }
 
+    local mason_registry = require 'mason-registry'
+
+    local function codelldb_paths()
+      local ok, pkg = pcall(mason_registry.get_package, 'codelldb')
+      if not ok or not pkg then
+        return nil
+      end
+      if type(pkg.is_installed) ~= 'function' or type(pkg.get_install_path) ~= 'function' then
+        return nil
+      end
+      if not pkg:is_installed() then
+        return nil
+      end
+
+      local extension_path = pkg:get_install_path() .. '/extension/'
+      local codelldb = extension_path .. 'adapter/codelldb'
+      local liblldb = extension_path .. 'lldb/lib/liblldb.so'
+
+      local os = vim.loop.os_uname().sysname
+      if os == 'Darwin' then
+        liblldb = extension_path .. 'lldb/lib/liblldb.dylib'
+      elseif os:find 'Windows' then
+        codelldb = codelldb .. '.exe'
+        liblldb = extension_path .. 'lldb/bin/liblldb.dll'
+      end
+
+      return codelldb, liblldb
+    end
+
+    local codelldb_path, liblldb_path = codelldb_paths()
+
+    if codelldb_path then
+      dap.adapters.codelldb = {
+        type = 'server',
+        port = '${port}',
+        executable = {
+          command = codelldb_path,
+          args = { '--liblldb', liblldb_path, '--port', '${port}' },
+        },
+      }
+    else
+      dap.adapters.codelldb = {
+        type = 'server',
+        port = '${port}',
+        executable = {
+          command = 'codelldb',
+          args = { '--port', '${port}' },
+        },
+      }
+    end
+
+    if vim.fn.executable 'gdb' == 1 then
+      dap.adapters.gdb = {
+        type = 'executable',
+        command = 'gdb',
+        args = { '--quiet', '--interpreter=dap' },
+      }
+    end
+
     -- Dap UI setup
     -- For more information, see |:help nvim-dap-ui|
     dapui.setup {
@@ -147,38 +207,184 @@ return {
         detached = vim.fn.has 'win32' == 0,
       },
     }
-    -- Set up C++/rust debugger
-    local dap = require 'dap'
-    dap.configurations.c = {
-      {
-        name = 'Debug',
-        type = 'codelldb',
+    -- Set up C-family debugger configurations
+    local function select_program()
+      return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+    end
+
+    local function choose_adapter()
+      return dap.adapters.gdb and 'gdb' or 'codelldb'
+    end
+
+    local function ensure_build_directory()
+      local dir = vim.fn.stdpath 'data' .. '/dap_builds'
+      if vim.fn.isdirectory(dir) == 0 then
+        vim.fn.mkdir(dir, 'p')
+      end
+      return dir
+    end
+
+    local function build_current_buffer(opts)
+      local file = vim.api.nvim_buf_get_name(0)
+      if file == '' then
+        vim.notify('Current buffer has no file on disk.', vim.log.levels.ERROR, { title = opts.name })
+        return nil
+      end
+
+      if vim.bo.modified then
+        local ok, err = pcall(vim.cmd.write)
+        if not ok then
+          vim.notify('Unable to save buffer before building: ' .. err, vim.log.levels.ERROR, { title = opts.name })
+          return nil
+        end
+      end
+
+      local build_dir = ensure_build_directory()
+      local output = build_dir .. '/' .. vim.fn.fnamemodify(file, ':t:r')
+      if vim.loop.os_uname().sysname:find 'Windows' then
+        output = output .. '.exe'
+      end
+
+      local command = opts.command(file, output)
+      local result = vim.fn.systemlist(command)
+
+      if vim.v.shell_error ~= 0 then
+        if #result == 0 then
+          result = { 'Build command failed: ' .. command }
+        end
+        vim.notify(table.concat(result, '\n'), vim.log.levels.ERROR, { title = opts.name })
+        return nil
+      end
+
+      if opts.on_success then
+        opts.on_success(command, result, output)
+      elseif #result > 0 then
+        vim.notify(table.concat(result, '\n'), vim.log.levels.INFO, { title = opts.name })
+      else
+        vim.notify(('Built %s'):format(output), vim.log.levels.INFO, { title = opts.name })
+      end
+
+      return output
+    end
+
+    local function shellescape(path)
+      return vim.fn.shellescape(path)
+    end
+
+    local function default_command(compiler, standard, extra_flags)
+      return function(src, exe)
+        local parts = { vim.fn.shellescape(compiler), '-g', '-O0' }
+        if standard and #standard > 0 then
+          table.insert(parts, standard)
+        end
+        if extra_flags then
+          for _, flag in ipairs(extra_flags) do
+            table.insert(parts, flag)
+          end
+        end
+        table.insert(parts, shellescape(src))
+        table.insert(parts, '-o')
+        table.insert(parts, shellescape(exe))
+        return table.concat(parts, ' ')
+      end
+    end
+
+    local function create_build_config(params)
+      if params.compiler and vim.fn.executable(params.compiler) ~= 1 then
+        return nil
+      end
+      if params.adapter and not dap.adapters[params.adapter] then
+        return nil
+      end
+
+      local command_builder = params.command or default_command(params.compiler, params.standard, params.extra_flags)
+
+      return {
+        name = params.name,
+        type = params.adapter or choose_adapter(),
         request = 'launch',
-        program = function()
-          return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
-        end,
         cwd = '${workspaceFolder}',
-        stopAtBeginningOfMainSubprogram = false,
+        stopOnEntry = false,
+        args = params.args,
+        program = function()
+          return build_current_buffer {
+            name = params.name,
+            command = function(src, exe)
+              return command_builder(src, exe, params)
+            end,
+            on_success = params.on_success,
+          }
+        end,
+      }
+    end
+
+    local base_configs = {
+      {
+        name = 'Launch executable',
+        type = choose_adapter(),
+        request = 'launch',
+        program = select_program,
+        cwd = '${workspaceFolder}',
+        stopOnEntry = false,
       },
       {
         name = 'Attach to process',
-        type = 'codelldb',
+        type = choose_adapter(),
         request = 'attach',
         pid = require('dap.utils').pick_process,
         cwd = '${workspaceFolder}',
       },
     }
-    dap.configurations.rust = {
-      {
-        name = 'Debug',
-        type = 'codelldb',
-        request = 'launch',
-        program = function()
-          return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
-        end,
-        cwd = '${workspaceFolder}',
-        stopOnEntry = false,
-      },
+
+    local c_configs = vim.deepcopy(base_configs)
+    local cpp_configs = vim.deepcopy(base_configs)
+    local rust_configs = vim.deepcopy(base_configs)
+
+    local clang_c = create_build_config {
+      name = 'Build & Debug (clang)',
+      compiler = 'clang',
+      adapter = 'codelldb',
+      standard = '-std=c17',
+      extra_flags = { '-Wall', '-Wextra' },
     }
+    if clang_c then
+      table.insert(c_configs, clang_c)
+    end
+
+    local gcc_c = create_build_config {
+      name = 'Build & Debug (gcc + gdb)',
+      compiler = 'gcc',
+      adapter = 'gdb',
+      extra_flags = { '-Wall', '-Wextra' },
+    }
+    if gcc_c then
+      table.insert(c_configs, gcc_c)
+    end
+
+    local clang_cpp = create_build_config {
+      name = 'Build & Debug (clang++)',
+      compiler = 'clang++',
+      adapter = 'codelldb',
+      standard = '-std=c++20',
+      extra_flags = { '-Wall', '-Wextra' },
+    }
+    if clang_cpp then
+      table.insert(cpp_configs, clang_cpp)
+    end
+
+    local gpp_cpp = create_build_config {
+      name = 'Build & Debug (g++ + gdb)',
+      compiler = 'g++',
+      adapter = 'gdb',
+      standard = '-std=c++20',
+      extra_flags = { '-Wall', '-Wextra' },
+    }
+    if gpp_cpp then
+      table.insert(cpp_configs, gpp_cpp)
+    end
+
+    dap.configurations.c = c_configs
+    dap.configurations.cpp = cpp_configs
+    dap.configurations.rust = rust_configs
   end,
 }
