@@ -271,6 +271,157 @@ return {
       return vim.fn.shellescape(path)
     end
 
+    local function find_cargo_manifest(start_path)
+      local matches = vim.fs.find('Cargo.toml', { path = start_path, upward = true })
+      if #matches == 0 then
+        return nil
+      end
+      return vim.fn.fnamemodify(matches[1], ':p')
+    end
+
+    local function cargo_metadata(manifest_path, title)
+      local cmd = { 'cargo', 'metadata', '--no-deps', '--format-version', '1', '--manifest-path', manifest_path }
+      local result = vim.fn.systemlist(cmd)
+
+      if vim.v.shell_error ~= 0 then
+        if #result == 0 then
+          result = { 'cargo metadata failed with exit code ' .. vim.v.shell_error }
+        end
+        vim.notify(table.concat(result, '\n'), vim.log.levels.ERROR, { title = title })
+        return nil
+      end
+
+      local ok, metadata = pcall(vim.json.decode, table.concat(result, '\n'))
+      if not ok then
+        vim.notify('Unable to parse cargo metadata output.', vim.log.levels.ERROR, { title = title })
+        return nil
+      end
+
+      return metadata
+    end
+
+    local function cargo_package_for_manifest(metadata, manifest_path)
+      manifest_path = vim.fn.fnamemodify(manifest_path, ':p')
+      for _, pkg in ipairs(metadata.packages or {}) do
+        if vim.fn.fnamemodify(pkg.manifest_path or '', ':p') == manifest_path then
+          return pkg
+        end
+      end
+      return metadata.packages and metadata.packages[1] or nil
+    end
+
+    local function cargo_bin_targets(pkg)
+      local targets = {}
+      for _, target in ipairs(pkg.targets or {}) do
+        if vim.tbl_contains(target.kind or {}, 'bin') then
+          table.insert(targets, target.name)
+        end
+      end
+      return targets
+    end
+
+    local function select_rust_binary_target(name, pkg, targets)
+      if #targets == 0 then
+        vim.notify(('No binary targets found in %s.'):format(pkg.name or 'package'), vim.log.levels.ERROR, { title = name })
+        return nil
+      end
+      if #targets == 1 then
+        return targets[1]
+      end
+
+      local prompt = { ('Select binary target for %s:'):format(pkg.name or 'package') }
+      for idx, target in ipairs(targets) do
+        table.insert(prompt, string.format('%d. %s', idx, target))
+      end
+
+      local choice = vim.fn.inputlist(prompt)
+      if choice < 1 or choice > #targets then
+        vim.notify('Canceled target selection.', vim.log.levels.WARN, { title = name })
+        return nil
+      end
+
+      return targets[choice]
+    end
+
+    local function build_rust_executable(params)
+      if vim.fn.executable('cargo') ~= 1 then
+        vim.notify('Cargo executable not found in PATH.', vim.log.levels.ERROR, { title = params.name })
+        return nil
+      end
+
+      local file = vim.api.nvim_buf_get_name(0)
+      if file == '' then
+        vim.notify('Current buffer has no file on disk.', vim.log.levels.ERROR, { title = params.name })
+        return nil
+      end
+
+      if vim.bo.modified then
+        local ok, err = pcall(vim.cmd.write)
+        if not ok then
+          vim.notify('Unable to save buffer before building: ' .. err, vim.log.levels.ERROR, { title = params.name })
+          return nil
+        end
+      end
+
+      local manifest = find_cargo_manifest(vim.fn.fnamemodify(file, ':p:h'))
+      if not manifest then
+        vim.notify('Could not locate Cargo.toml for the current buffer.', vim.log.levels.ERROR, { title = params.name })
+        return nil
+      end
+
+      local metadata = cargo_metadata(manifest, params.name)
+      if not metadata then
+        return nil
+      end
+
+      local pkg = cargo_package_for_manifest(metadata, manifest)
+      if not pkg then
+        vim.notify('Unable to determine Cargo package for manifest.', vim.log.levels.ERROR, { title = params.name })
+        return nil
+      end
+
+      local targets = cargo_bin_targets(pkg)
+      local target_name = select_rust_binary_target(params.name, pkg, targets)
+      if not target_name then
+        return nil
+      end
+
+      local cmd = { 'cargo', 'build', '--manifest-path', manifest }
+      if params.release then
+        table.insert(cmd, '--release')
+      end
+      table.insert(cmd, '--bin')
+      table.insert(cmd, target_name)
+
+      local result = vim.fn.systemlist(cmd)
+      if vim.v.shell_error ~= 0 then
+        if #result == 0 then
+          result = { 'cargo build failed with exit code ' .. vim.v.shell_error }
+        end
+        vim.notify(table.concat(result, '\n'), vim.log.levels.ERROR, { title = params.name })
+        return nil
+      end
+
+      if #result > 0 then
+        vim.notify(table.concat(result, '\n'), vim.log.levels.INFO, { title = params.name })
+      else
+        vim.notify('cargo build completed successfully.', vim.log.levels.INFO, { title = params.name })
+      end
+
+      local profile_dir = params.release and 'release' or 'debug'
+      local exe = metadata.target_directory .. '/' .. profile_dir .. '/' .. target_name
+      if vim.loop.os_uname().sysname:find 'Windows' then
+        exe = exe .. '.exe'
+      end
+
+      if vim.loop.fs_stat(exe) then
+        return exe
+      end
+
+      vim.notify(('Built binary not found at %s. Please select manually.'):format(exe), vim.log.levels.WARN, { title = params.name })
+      return select_program()
+    end
+
     local function default_command(compiler, standard, extra_flags)
       return function(src, exe)
         local parts = { vim.fn.shellescape(compiler), '-g', '-O0' }
@@ -340,7 +491,34 @@ return {
     local cpp_configs = vim.deepcopy(base_configs)
     local rust_configs = vim.deepcopy(base_configs)
 
+    local function add_rust_config(opts)
+      if not dap.adapters.codelldb then
+        return
+      end
+      table.insert(rust_configs, {
+        name = opts.name,
+        type = 'codelldb',
+        request = 'launch',
+        cwd = '${workspaceFolder}',
+        stopOnEntry = false,
+        program = function()
+          return build_rust_executable(opts)
+        end,
+      })
+    end
+
+    add_rust_config {
+      name = 'Cargo build & debug',
+    }
+
+    add_rust_config {
+      name = 'Cargo build & debug (release)',
+      release = true,
+    }
+
     local clang_c = create_build_config {
+
+
       name = 'Build & Debug (clang)',
       compiler = 'clang',
       adapter = 'codelldb',
