@@ -13,7 +13,7 @@ return {
         nvim_biscuits.toggle_biscuits()
       end,
       mode = 'n',
-      desc = 'Enable Biscuits',
+      desc = 'Toggle Biscuits',
     },
   },
 }
