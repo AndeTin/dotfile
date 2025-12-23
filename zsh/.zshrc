@@ -9,11 +9,12 @@ source ~/Repos/znap/znap.zsh
 # --- Zsh Plugins ---
 source ~/Repos/zsh-autocomplete/zsh-autocomplete.plugin.zsh
 source ~/Repos/zsh-autoswitch-virtualenv/autoswitch_virtualenv.plugin.zsh
+source ~/Repos/clipboard.zsh
 source ~/Repos/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source ~/Repos/ohmyzsh/plugins/copyfile/copyfile.plugin.zsh
 
 # --- FZF Setup ---
-plugins=(git fzf)
-
+plugins=(git fzf copyfile)
 # --- Zoxide ---
 eval "$(zoxide init zsh)"
 
