@@ -81,10 +81,10 @@ export PATH=$PATH:$ANDROID_HOME/platform-tools
 # --- Aliases ---
 alias ls='eza -F --color=always --icons=always'
 alias ll='eza -al'
-alias vim='nvim'
+alias v='nvim'
 alias cat='bat'
 alias zen='zen-browser'
-alias nvimf='nvim $(fzf --preview="bat --color=always {}")'
+alias vf='nvim $(fzf --preview="bat --color=always {}")'
 alias lg='lazygit'
 alias ld='lazydocker'
 alias z...='z ../..'
