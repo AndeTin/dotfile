@@ -943,22 +943,36 @@ require('lazy').setup({
       -- Load the colorscheme here.
       -- Like many other themes, this one has different styles, and you could load
       -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-      vim.cmd.colorscheme 'catppuccin'
+      vim.cmd.colorscheme 'everforest'
     end,
   },
 
   -- Highlight todo, notes, etc in comments
   {
     { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
-
-
   },
   { -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',
-     config = function()
-       require('nvim-treesitter.configs').setup {
-        ensure_installed = { 'cpp', 'rust', 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc', 'python', 'csv' },
+    config = function()
+      require('nvim-treesitter.configs').setup {
+        ensure_installed = {
+          'cpp',
+          'rust',
+          'bash',
+          'c',
+          'diff',
+          'html',
+          'lua',
+          'luadoc',
+          'markdown',
+          'markdown_inline',
+          'query',
+          'vim',
+          'vimdoc',
+          'python',
+          'csv',
+        },
         -- Autoinstall languages that are not installed
         auto_install = true,
         highlight = {
