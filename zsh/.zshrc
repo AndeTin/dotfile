@@ -49,6 +49,7 @@ export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 export EDITOR='nvim'
 export SYSTEMD_EDITOR='nvim'
+export SUDO_EDITOR="nvim"
 export BAT_THEME="Everforest"
 export XCURSOR_SIZE=40
 export XCURSOR_THEME="Bibata-Modern-Ice"
