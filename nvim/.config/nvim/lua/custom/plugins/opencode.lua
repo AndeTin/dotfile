@@ -4,8 +4,21 @@ return {
   config = function()
     vim.g.opencode_opts = {
       provider = {
-        enabled = "snacks"
-      }
+        enabled = "snacks",
+        snacks = {
+          win = {
+            position = "right",
+            width = 0.4,
+          },
+        },
+      },
+      ask = {
+        snacks = {
+          win = {
+            border = "rounded",
+          },
+        },
+      },
     }
   end,
   -- stylua: ignore

@@ -1,3 +1,4 @@
+source ~/.zshrc_secret
 # --- Starship Prompt ---
 eval "$(starship init zsh)"
 
