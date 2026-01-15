@@ -1,5 +1,4 @@
 acpi
-aether
 alacritty
 amd-ucode
 android-sdk
@@ -30,14 +29,13 @@ cups
 cups-browsed
 cups-filters
 cups-pdf
-discord
-discord-canary
 ditaa
 dnsmasq
 docker
 docker-buildx
 docker-compose
 dog
+dotnet-runtime-9.0
 durdraw
 dust
 efibootmgr
@@ -83,6 +81,7 @@ git
 github-cli
 github-copilot-cli
 glow
+gmetronome
 gnome-calculator
 gnome-disk-utility
 gnome-keyring
@@ -115,6 +114,7 @@ jq
 jujutsu-git
 kdeconnect-git
 kdenlive
+kew
 kitty
 kvantum-qt5
 lazydocker
@@ -160,6 +160,7 @@ mariadb-libs
 millennium
 mise
 mpv
+music-presence-bin
 nautilus
 ncdu
 neofetch
@@ -175,6 +176,7 @@ npm
 nss-mdns
 ntfs-3g
 nvidia-open-dkms
+nvidia-prime
 nvidia-utils
 obs-studio
 obsidian
@@ -188,6 +190,7 @@ openrgb-bin
 ouch
 package-query
 pamixer
+parallel
 paru
 paru-debug
 pinta
@@ -209,6 +212,7 @@ python-virtualenv
 python2
 python310
 python312
+python314
 qemu-full
 qemu-guest-agent
 qt5-wayland
@@ -224,7 +228,7 @@ signal-desktop
 slurp
 snapper
 sof-firmware
-spotify
+stacher7
 starship
 steam
 stow
@@ -245,6 +249,7 @@ timeshift
 tldr
 tmux
 tobi-try
+traceroute
 tree-sitter-cli
 ttf-0xproto
 ttf-cascadia-mono-nerd
@@ -262,6 +267,7 @@ unzip
 usage
 uwsm
 veracrypt-git
+vesktop-bin
 virt-manager
 virt-viewer
 virtio-win
@@ -295,7 +301,9 @@ yay
 yay-debug
 yazi
 ydotool
+yq
 yt-dlp
+zed
 zellij
 zen-browser-bin
 zoxide
