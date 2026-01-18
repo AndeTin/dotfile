@@ -1,0 +1,9 @@
+[[mgr.prepend_keymap]]
+on = ["C"]
+run = "plugin ouch"
+desc = "Compress with ouch"
+
+[[mgr.prepend_keymap]]
+on   = [ "g", "a" ]
+run  = "cd /mnt/NVME1/"
+desc = "cd /mnt/NVME1/"
