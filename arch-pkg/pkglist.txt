@@ -1,4 +1,5 @@
 acpi
+aether
 alacritty
 amd-ucode
 android-sdk
@@ -39,20 +40,6 @@ dotnet-runtime-9.0
 durdraw
 dust
 efibootmgr
-egl-wayland
-elephant
-elephant-bluetooth
-elephant-calc
-elephant-clipboard
-elephant-desktopapplications
-elephant-files
-elephant-menus
-elephant-providerlist
-elephant-runner
-elephant-symbols
-elephant-todo
-elephant-unicode
-elephant-websearch
 espeak
 evince
 exfatprogs
@@ -81,7 +68,6 @@ git
 github-cli
 github-copilot-cli
 glow
-gmetronome
 gnome-calculator
 gnome-disk-utility
 gnome-keyring
@@ -114,7 +100,6 @@ jq
 jujutsu-git
 kdeconnect-git
 kdenlive
-kew
 kitty
 kvantum-qt5
 lazydocker
@@ -160,7 +145,6 @@ mariadb-libs
 millennium
 mise
 mpv
-music-presence-bin
 nautilus
 ncdu
 neofetch
@@ -176,7 +160,6 @@ npm
 nss-mdns
 ntfs-3g
 nvidia-open-dkms
-nvidia-prime
 nvidia-utils
 obs-studio
 obsidian
@@ -190,12 +173,11 @@ openrgb-bin
 ouch
 package-query
 pamixer
-parallel
 paru
-paru-debug
 pinta
 pipewire
 pipewire-alsa
+pipewire-jack
 pipewire-pulse
 plasma-nm
 playerctl
@@ -212,7 +194,6 @@ python-virtualenv
 python2
 python310
 python312
-python314
 qemu-full
 qemu-guest-agent
 qt5-wayland
@@ -223,16 +204,16 @@ ruby
 rust
 satty
 sddm
-shutter-encoder-bin
 signal-desktop
 slurp
 snapper
 sof-firmware
-stacher7
+spotify
 starship
 steam
 stow
 strace
+sudo
 supergfxctl
 sushi
 swaybg
@@ -249,7 +230,6 @@ timeshift
 tldr
 tmux
 tobi-try
-traceroute
 tree-sitter-cli
 ttf-0xproto
 ttf-cascadia-mono-nerd
@@ -275,7 +255,6 @@ vivaldi
 vulkan-radeon
 vulkan-tools
 w3m
-walker
 waybar
 wayfreeze
 wget
@@ -303,7 +282,6 @@ yazi
 ydotool
 yq
 yt-dlp
-zed
 zellij
 zen-browser-bin
 zoxide
