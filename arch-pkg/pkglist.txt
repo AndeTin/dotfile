@@ -204,11 +204,13 @@ ruby
 rust
 satty
 sddm
+shutter-encoder-bin
 signal-desktop
 slurp
 snapper
 sof-firmware
 spotify
+stacher7
 starship
 steam
 stow
