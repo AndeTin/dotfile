@@ -6,4 +6,9 @@ desc = "Compress with ouch"
 [[mgr.prepend_keymap]]
 on   = [ "g", "a" ]
 run  = "cd /mnt/NVME1/"
-desc = "cd /mnt/NVME1/"
+desc = "Go to second drive"
+
+[[mgr.prepend_keymap]]
+on   = [ "g", "l" ]
+run  = "cd ~/.local/"
+desc = "Go to .local"
