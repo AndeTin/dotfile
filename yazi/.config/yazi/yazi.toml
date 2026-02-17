@@ -1,3 +1,23 @@
+[opener]
+gnome_gio = [
+    { run = 'gio open "$1"', desc = "Open", block = false }
+]
+
+[open]
+rules = [
+    # Match PDFs specifically
+    { name = "*.pdf", use = "gnome_gio" },
+    { mime = "application/pdf", use = "gnome_gio" },
+
+    # Match Office files
+    { name = "*.doc*", use = "gnome_gio" },
+    { name = "*.xls*", use = "gnome_gio" },
+
+    # Fallback: If it's not a text file or folder, try gio
+    { mime = "*", use = "gnome_gio" }
+]
+
+# Keep your existing previewers below
 [[plugin.prepend_previewers]]
 mime = "application/{*zip,tar,bzip2,7z*,rar,xz,zstd,java-archive}"
 run  = "ouch"
