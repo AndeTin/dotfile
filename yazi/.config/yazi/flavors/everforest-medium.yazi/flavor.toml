@@ -223,7 +223,46 @@ rules = [
 
 	# Fallback
 	{ name = "*", fg = "#83c092" },
-	{ name = "*/", fg = "#a7c080" }
+	{ if = "dir", fg = "#a7c080" }
+]
+
+# : }}}
+# : Icons (Required for v0.4.0) {{{
+
+[icon]
+
+# Override default Yazi folder colors for standard directories
+prepend_dirs = [
+	{ name = "Desktop",   text = "", fg = "#a7c080" },
+	{ name = "Documents", text = "", fg = "#7fbbb3" },
+	{ name = "Downloads", text = "", fg = "#a7c080" },
+	{ name = "Music",     text = "", fg = "#d699b6" },
+	{ name = "Pictures",  text = "", fg = "#7fbbb3" },
+	{ name = "Videos",    text = "", fg = "#d699b6" },
+]
+
+# Fallback for all other directories
+prepend_conds = [
+	{ if = "dir", text = "", fg = "#a7c080" }
+]
+
+# Map file extensions/mimes to your color palette
+prepend_rules = [
+	# Images
+	{ mime = "image/*", text = "", fg = "#7fbbb3" },
+	# Media
+	{ mime = "audio/*", text = "", fg = "#d699b6" },
+	{ mime = "video/*", text = "", fg = "#d699b6" },
+	# Archives
+	{ mime = "application/*zip", text = "", fg = "#e67e80" },
+	{ mime = "application/x-{tar,bzip*,7z-compressed,xz,rar}", text = "", fg = "#e67e80" },
+	# Documents
+	{ mime = "application/{pdf,doc,rtf,vnd.*}", text = "", fg = "#7fbbb3" },
+]
+
+# Global fallback for all other files
+append_rules = [
+	{ name = "*", text = "", fg = "#83c092" }
 ]
 
 # : }}}
