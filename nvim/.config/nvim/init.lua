@@ -92,6 +92,7 @@ vim.opt.tabstop = 4 -- A tab character looks like 4 spaces
 vim.opt.shiftwidth = 4 -- Indentation levels are 4 spaces
 vim.opt.softtabstop = 4 -- When pressing Tab, insert 4 spaces
 vim.opt.expandtab = true -- Convert tabs to spaces
+vim.opt.wrap = false
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 

@@ -84,6 +84,7 @@ export PATH=$PATH:$ANDROID_HOME/platform-tools
 alias man='batman'
 alias ls='eza -F --color=always --icons=always'
 alias ll='eza -al'
+alias lt='eza -al --tree'
 alias v='nvim'
 alias zen='zen-browser'
 alias vf='nvim $(fzf --preview="bat --color=always {}")'
