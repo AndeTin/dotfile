@@ -93,8 +93,8 @@ alias ld='lazydocker'
 alias z...='z ../..'
 
 # --- Welcome Message ---
-echo "Welcome back 🚀!"
-fastfetch
+# echo "Welcome back 🚀!"
+# fastfetch
 
 # --- FZF Integration (must be last for tab completion reliability) ---
 source <(fzf --zsh)
