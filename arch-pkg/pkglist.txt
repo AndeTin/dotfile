@@ -1,6 +1,6 @@
 acpi
-aether
 alacritty
+alpaca-ai
 amd-ucode
 android-sdk
 android-sdk-platform-tools
@@ -25,9 +25,11 @@ brightnessctl
 btop
 btrfs-assistant
 btrfs-progs
+burpsuite
 cbonsai-git
 chromium
 clang
+cliamp
 code
 cowsay
 cups
@@ -79,6 +81,7 @@ gpu-screen-recorder
 grim
 gst-plugin-pipewire
 gtk4
+gtkwave
 gum
 gvfs-mtp
 gvfs-nfs
@@ -98,7 +101,8 @@ impala
 imv
 inetutils
 inxi
-iptables-nft
+iptables
+iverilog
 iwd
 jdk8-openjdk
 jq
@@ -146,7 +150,6 @@ loupe
 luarocks
 lutris
 magic-wormhole
-makima-bin
 mako
 man-db
 mangohud
@@ -159,6 +162,7 @@ ncdu
 neovim
 network-manager-applet
 networkmanager
+nmap
 noto-fonts
 noto-fonts-cjk
 noto-fonts-emoji
@@ -171,6 +175,7 @@ nvidia-open-dkms
 nvidia-utils
 obs-studio
 obsidian
+ollama
 omarchy-keyring
 omarchy-nvim
 omarchy-walker
@@ -182,6 +187,7 @@ package-query
 pamixer
 paru
 pinta
+piper
 pipewire
 pipewire-alsa
 pipewire-jack
@@ -202,7 +208,6 @@ python-virtualenv
 python2
 python310
 python312
-python315
 qemu-full
 qemu-guest-agent
 qt5-wayland
@@ -218,7 +223,9 @@ shutter-encoder-bin
 signal-desktop
 slurp
 snapper
+socat
 sof-firmware
+sqlmap
 stacher7
 starship
 steam
@@ -235,6 +242,8 @@ tailscale
 tcpdump
 teams-for-linux-bin
 termusic
+tesseract
+tesseract-data-eng
 testdisk
 thunderbird
 timeshift
@@ -253,7 +262,6 @@ ucl
 ufw
 ufw-docker
 unclutter
-unityhub
 unzip
 usage
 uwsm
@@ -269,6 +277,7 @@ vulkan-radeon
 vulkan-tools
 w3m
 waybar
+waycal
 wayland-utils
 wget
 whois
@@ -296,6 +305,7 @@ yazi
 ydotool
 yq
 yt-dlp
+zed
 zellij
 zen-browser-bin
 zoxide

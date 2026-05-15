@@ -6,12 +6,12 @@ gnome_gio = [
 [open]
 rules = [
     # Match PDFs specifically
-    { name = "*.pdf", use = "gnome_gio" },
+    { url = "*.pdf", use = "gnome_gio" },
     { mime = "application/pdf", use = "gnome_gio" },
 
     # Match Office files
-    { name = "*.doc*", use = "gnome_gio" },
-    { name = "*.xls*", use = "gnome_gio" },
+    { url = "*.doc*", use = "gnome_gio" },
+    { url = "*.xls*", use = "gnome_gio" },
 
     # Fallback: If it's not a text file or folder, try gio
     { mime = "*", use = "gnome_gio" }

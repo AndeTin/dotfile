@@ -17,3 +17,8 @@ desc = "Go to Document"
 on   = [ "g", "l" ]
 run  = "cd ~/.local/"
 desc = "Go to .local"
+
+[[mgr.prepend_keymap]]
+on   = [ "g", "p" ]
+run  = "cd ~/Pictures/"
+desc = "Go to Pictures"
