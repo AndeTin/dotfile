@@ -22,3 +22,4 @@ desc = "Go to .local"
 on   = [ "g", "p" ]
 run  = "cd ~/Pictures/"
 desc = "Go to Pictures"
+
