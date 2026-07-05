@@ -4,7 +4,6 @@ alpaca-ai
 amd-ucode
 android-sdk
 android-sdk-platform-tools
-android-studio
 ascii-image-converter
 asdcontrol
 base
@@ -31,6 +30,7 @@ chromium
 clang
 cliamp
 code
+composer
 cowsay
 cups
 cups-browsed
@@ -60,6 +60,7 @@ fcitx5-qt
 fd
 ffmpegthumbnailer
 figlet
+filezilla
 flatpak
 fontconfig
 freerdp
@@ -153,6 +154,7 @@ magic-wormhole
 mako
 man-db
 mangohud
+mariadb
 mariadb-libs
 mise
 mpv
@@ -179,13 +181,21 @@ ollama
 omarchy-keyring
 omarchy-nvim
 omarchy-walker
+openai-codex
 openbsd-netcat
 opencode-bin
 openrgb-bin
+openvpn
 ouch
 package-query
 pamixer
 paru
+php
+php-apache
+php-gd
+php-pgsql
+php-sodium
+php-sqlite
 pinta
 piper
 pipewire
@@ -199,6 +209,7 @@ plymouth
 polkit-gnome
 postgresql-libs
 power-profiles-daemon
+powertop
 python-gobject
 python-opencv
 python-pip
@@ -212,6 +223,7 @@ qemu-full
 qemu-guest-agent
 qt5-wayland
 qt6-wayland
+r2modman-bin
 ripgrep
 rog-control-center
 ruby
@@ -238,6 +250,7 @@ swaybg
 swayosd
 swtpm
 system-config-printer
+tableplus
 tailscale
 tcpdump
 teams-for-linux-bin
@@ -273,10 +286,12 @@ virt-manager
 virt-viewer
 virtio-win
 vivaldi
+vsftpd
 vulkan-radeon
 vulkan-tools
 w3m
 waybar
+waybar-weather
 waycal
 wayland-utils
 wget
@@ -288,8 +303,6 @@ wiremix
 wireplumber
 wl-clipboard
 woff2-font-awesome
-wttrbar-git
-xampp
 xdg-desktop-portal-gtk
 xdg-desktop-portal-hyprland
 xdg-terminal-exec
@@ -305,6 +318,7 @@ yazi
 ydotool
 yq
 yt-dlp
+zaproxy
 zed
 zellij
 zen-browser-bin
