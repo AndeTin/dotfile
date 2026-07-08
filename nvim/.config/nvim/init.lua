@@ -761,6 +761,8 @@ require('lazy').setup({
         'flake8', -- Used to lint Python code
         'mypy', -- Used to lint Python code
         'markdownlint', -- Used to lint Markdown files
+        'vue-language-server', -- Used to provide Vue LSP features
+        'vtsls', -- TypeScript LSP with Vue plugin support
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
@@ -769,6 +771,10 @@ require('lazy').setup({
         automatic_installation = false,
         handlers = {
           function(server_name)
+            -- Skip servers handled via new vim.lsp.config API
+            if server_name == 'vtsls' or server_name == 'vue_ls' then
+              return
+            end
             local server = servers[server_name] or {}
             -- This handles overriding only values explicitly passed
             -- by the server configuration above. Useful when disabling
@@ -778,6 +784,35 @@ require('lazy').setup({
           end,
         },
       }
+
+      -- Vue language server + vtsls (uses new Nvim 0.11+ API)
+      local vue_plugin_path = vim.fn.stdpath('data') .. '/mason/packages/vue-language-server/node_modules/@vue/language-server'
+      vim.lsp.config.vue_ls = {
+        cmd = { 'vue-language-server', '--stdio' },
+        filetypes = { 'vue' },
+        root_markers = { 'package.json' },
+      }
+      vim.lsp.enable('vue_ls')
+
+      vim.lsp.config.vtsls = {
+        cmd = { 'vtsls', '--stdio' },
+        filetypes = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact', 'vue' },
+        root_markers = { 'package.json' },
+        settings = {
+          vtsls = {
+            tsserver = {
+              globalPlugins = {
+                {
+                  name = '@vue/typescript-plugin',
+                  location = vue_plugin_path,
+                  languages = { 'vue' },
+                },
+              },
+            },
+          },
+        },
+      }
+      vim.lsp.enable('vtsls')
     end,
   },
 
@@ -819,6 +854,7 @@ require('lazy').setup({
         typescript = { 'prettier' },
         html = { 'prettier' },
         css = { 'prettier' },
+        vue = { 'prettier' },
         kotlin = { 'ktfmt', 'ktlint' },
 
         -- Conform can also run multiple formatters sequentially

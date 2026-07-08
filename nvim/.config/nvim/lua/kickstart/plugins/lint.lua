@@ -14,6 +14,7 @@ lint.linters_by_ft = {
 		 javascript = { 'eslint_d' },
 		 typescript = { 'eslint_d' },
 		 kotlin = { 'ktlint' },
+		 vue = { 'eslint_d' },
 		 }
 
       -- Always pass --filter=-legal/copyright to cpplint
