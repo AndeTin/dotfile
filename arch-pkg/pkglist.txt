@@ -11,6 +11,7 @@ base-devel
 bash-completion
 bat
 bat-extras
+bear
 betterdiscord-installer
 bibata-cursor-theme
 blueman
@@ -319,7 +320,6 @@ ydotool
 yq
 yt-dlp
 zaproxy
-zed
 zellij
 zen-browser-bin
 zoxide
