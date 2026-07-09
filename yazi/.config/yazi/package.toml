@@ -1,0 +1,14 @@
+[[plugin.deps]]
+use = "ndtoan96/ouch"
+rev = "cfb9140"
+hash = "b5067143415bd2d46c0dfa57319ddcef"
+
+[[plugin.deps]]
+use = "vmikk/zless-preview"
+rev = "2e13623"
+hash = "3d18460218b449fb12b11dadcd185ffa"
+
+[[flavor.deps]]
+use = "Chromium-3-Oxide/everforest-medium"
+rev = "0158f0f"
+hash = "dbbbfe681e156c28303efb1f44b6cbc4"

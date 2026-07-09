@@ -1,3 +1,4 @@
+source ~/.zshrc_secret
 # --- Starship Prompt ---
 eval "$(starship init zsh)"
 
@@ -49,7 +50,8 @@ export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 export EDITOR='nvim'
 export SYSTEMD_EDITOR='nvim'
-export BAT_THEME="Catppuccin Mocha"
+export SUDO_EDITOR="nvim"
+export BAT_THEME="everforest-soft"
 export XCURSOR_SIZE=40
 export XCURSOR_THEME="Bibata-Modern-Ice"
 # Input method modules
@@ -64,14 +66,14 @@ export _ZO_ECHO="0"
 export _ZO_MAXAGE="100"
 export _ZO_RESOLVE_SYMLINKS="1"
 
-# --- FZF Options ---
+# --- FZF Options (Everforest Theme) ---
 export FZF_DEFAULT_OPTS=" \
 --height 75% --reverse --border \
---color=bg+:#313244,bg:#1E1E2E,spinner:#F5E0DC,hl:#F38BA8 \
---color=fg:#CDD6F4,header:#F38BA8,info:#CBA6F7,pointer:#F5E0DC \
---color=marker:#B4BEFE,fg+:#CDD6F4,prompt:#CBA6F7,hl+:#F38BA8 \
---color=selected-bg:#45475A \
---color=border:#6C7086,label:#CDD6F4"
+--color=bg+:#2E383C,bg:#272E33,spinner:#A7C080,hl:#E67E80 \
+--color=fg:#D3C6AA,header:#E67E80,info:#7FBBB3,pointer:#A7C080 \
+--color=marker:#E69875,fg+:#D3C6AA,prompt:#7FBBB3,hl+:#E67E80 \
+--color=selected-bg:#414B50 \
+--color=border:#495156,label:#D3C6AA"
 
 # --- Android SDK ---
 export ANDROID_HOME=/opt/android-sdk
@@ -82,6 +84,7 @@ export PATH=$PATH:$ANDROID_HOME/platform-tools
 alias man='batman'
 alias ls='eza -F --color=always --icons=always'
 alias ll='eza -al'
+alias lt='eza -al --tree'
 alias v='nvim'
 alias zen='zen-browser'
 alias vf='nvim $(fzf --preview="bat --color=always {}")'
@@ -90,8 +93,8 @@ alias ld='lazydocker'
 alias z...='z ../..'
 
 # --- Welcome Message ---
-echo "Welcome back 🚀!"
-fastfetch
+# echo "Welcome back 🚀!"
+# fastfetch
 
 # --- FZF Integration (must be last for tab completion reliability) ---
 source <(fzf --zsh)

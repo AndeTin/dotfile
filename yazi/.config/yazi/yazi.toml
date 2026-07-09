@@ -1,0 +1,50 @@
+[opener]
+document_viewer = [
+	{ run = 'evince "$@"', orphan = true, desc = "Document Viewer" }
+]
+gnome_gio = [
+    { run = 'gio open "$1"', desc = "Open", block = false }
+]
+neovim = [
+	{ run = 'nvim "$@"', block = true, desc = "Neovim" }
+]
+extract = [
+	{ run = 'ouch d -y "$@"', desc = "Extract here with ouch", for = "unix" },
+	{ run = 'ouch d -y %*', desc = "Extract here with ouch", for = "windows" }
+]
+
+
+[open]
+rules = [
+    # Universal Archive Extraction (using ouch)
+    { mime = "application/{zip,x-tar,x-bzip2,x-7z-compressed,x-rar,x-gtar,x-xz,zstd}", use = "extract" },
+    { url = "*.{zip,tar,tar.gz,tgz,7z,rar,xz,zst}", use = "extract" },
+
+    # Match PDFs specifically
+    { url = "*.pdf", use = [ "gnome_gio", "document_viewer" ] },
+    { mime = "application/pdf", use = [ "gnome_gio", "document_viewer" ] },
+
+    { url = "*.json", use = "neovim" },
+
+    # Match Office files
+    { url = "*.doc*", use = "gnome_gio" },
+    { url = "*.xls*", use = "gnome_gio" },
+
+    # Apply Neovim to all plain text files, scripts, and code config files
+    { mime = "text/*", use = [ "neovim" ] },
+    { mime = "application/x-subrip", use = [ "neovim" ] }, # Subtitles/Srt
+    
+    # Specific extensions you might want to force-route to Neovim
+    { url = "*.md",   use = [ "neovim" ] },
+    { url = "*.json", use = [ "neovim" ] },
+    { url = "*.toml", use = [ "neovim" ] },
+    { url = "*.sh",   use = [ "neovim" ] },
+
+    # Fallback: If it's not a text file or folder, try neovim
+    { mime = "*", use = ["gnome_gio","neovim"] }
+]
+
+# Keep your existing previewers below
+[[plugin.prepend_previewers]]
+mime = "application/{*zip,tar,bzip2,7z*,rar,xz,zstd,java-archive}"
+run  = "ouch"
