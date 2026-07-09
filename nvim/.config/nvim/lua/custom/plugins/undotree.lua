@@ -20,9 +20,7 @@ return {
       q = 'quit',
     },
   },
-  keys = {
-    { '<leader>u', "<cmd>lua require('undotree').toggle()<cr>" },
-  },
+  { vim.keymap.set('n', '<leader>u', "<cmd>lua require('undotree').toggle()<cr>", { desc = 'Toggle [U]ndotree' }) },
   config = function(_, opts)
     require('undotree').setup(opts)
     vim.keymap.set('n', '<leader>u', require('undotree').toggle, { noremap = true, silent = true, desc = 'Toggle Undotree' })

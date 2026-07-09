@@ -1,3 +1,3 @@
 #!/bin/bash
 
-paru -Qqe > pkglist.txt
+paru -Qqe > ~/dotfile/arch-pkg/pkglist.txt

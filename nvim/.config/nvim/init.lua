@@ -92,6 +92,7 @@ vim.opt.tabstop = 4 -- A tab character looks like 4 spaces
 vim.opt.shiftwidth = 4 -- Indentation levels are 4 spaces
 vim.opt.softtabstop = 4 -- When pressing Tab, insert 4 spaces
 vim.opt.expandtab = true -- Convert tabs to spaces
+vim.opt.wrap = false
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
@@ -702,6 +703,7 @@ require('lazy').setup({
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
         clangd = {},
+        phpactor = {},
         -- gopls = {},
         -- pyright = {},
         -- rust_analyzer = {},
@@ -759,6 +761,8 @@ require('lazy').setup({
         'flake8', -- Used to lint Python code
         'mypy', -- Used to lint Python code
         'markdownlint', -- Used to lint Markdown files
+        'vue-language-server', -- Used to provide Vue LSP features
+        'vtsls', -- TypeScript LSP with Vue plugin support
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
@@ -767,6 +771,10 @@ require('lazy').setup({
         automatic_installation = false,
         handlers = {
           function(server_name)
+            -- Skip servers handled via new vim.lsp.config API
+            if server_name == 'vtsls' or server_name == 'vue_ls' then
+              return
+            end
             local server = servers[server_name] or {}
             -- This handles overriding only values explicitly passed
             -- by the server configuration above. Useful when disabling
@@ -776,12 +784,41 @@ require('lazy').setup({
           end,
         },
       }
+
+      -- Vue language server + vtsls (uses new Nvim 0.11+ API)
+      local vue_plugin_path = vim.fn.stdpath('data') .. '/mason/packages/vue-language-server/node_modules/@vue/language-server'
+      vim.lsp.config.vue_ls = {
+        cmd = { 'vue-language-server', '--stdio' },
+        filetypes = { 'vue' },
+        root_markers = { 'package.json' },
+      }
+      vim.lsp.enable('vue_ls')
+
+      vim.lsp.config.vtsls = {
+        cmd = { 'vtsls', '--stdio' },
+        filetypes = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact', 'vue' },
+        root_markers = { 'package.json' },
+        settings = {
+          vtsls = {
+            tsserver = {
+              globalPlugins = {
+                {
+                  name = '@vue/typescript-plugin',
+                  location = vue_plugin_path,
+                  languages = { 'vue' },
+                },
+              },
+            },
+          },
+        },
+      }
+      vim.lsp.enable('vtsls')
     end,
   },
 
   { -- Autoformat
     'stevearc/conform.nvim',
-    event = { 'BufWritePre' },
+    -- event = { 'BufWritePre' },
     cmd = { 'ConformInfo' },
     keys = {
       {
@@ -815,6 +852,9 @@ require('lazy').setup({
         python = { 'yapf' },
         javascript = { 'prettier' },
         typescript = { 'prettier' },
+        html = { 'prettier' },
+        css = { 'prettier' },
+        vue = { 'prettier' },
         kotlin = { 'ktfmt', 'ktlint' },
 
         -- Conform can also run multiple formatters sequentially
@@ -943,7 +983,7 @@ require('lazy').setup({
       -- Load the colorscheme here.
       -- Like many other themes, this one has different styles, and you could load
       -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-      vim.cmd.colorscheme 'catppuccin'
+      vim.cmd.colorscheme 'everforest'
     end,
   },
 
@@ -955,6 +995,39 @@ require('lazy').setup({
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',
     main = 'nvim-treesitter.configs', -- Sets main module to use for opts
+    -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
+    opts = {
+      ensure_installed = {
+        'bash',
+        'c',
+        'cpp',
+        'python',
+        'javascript',
+        'java',
+        'typescript',
+        'csv',
+        'diff',
+        'html',
+        'lua',
+        'luadoc',
+        'markdown',
+        'markdown_inline',
+        'query',
+        'vim',
+        'vimdoc',
+      },
+      -- Autoinstall languages that are not installed
+      auto_install = true,
+      highlight = {
+        enable = true,
+        -- Some languages depend on vim's regex highlighting system (such as Ruby) for indent rules.
+        --  If you are experiencing weird indenting issues, add the language to
+        --  the list of additional_vim_regex_highlighting and disabled languages for indent.
+        additional_vim_regex_highlighting = { 'ruby' },
+      },
+      indent = { enable = true, disable = { 'ruby' } },
+    },
+    main = 'nvim-treesitter.config', -- Sets main module to use for opts
     -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
     opts = {
       ensure_installed = {
