@@ -2,17 +2,6 @@ source ~/.zshrc_secret
 # --- Starship Prompt ---
 eval "$(starship init zsh)"
 
-# --- Znap Plugin Manager ---
-[[ -r ~/Repos/znap/znap.zsh ]] || \
-    git clone --depth 1 -- https://github.com/marlonrichert/zsh-snap.git ~/Repos/znap
-source ~/Repos/znap/znap.zsh
-
-# --- Zsh Plugins ---
-source ~/Repos/zsh-autocomplete/zsh-autocomplete.plugin.zsh
-source ~/Repos/zsh-autoswitch-virtualenv/autoswitch_virtualenv.plugin.zsh
-source ~/Repos/clipboard.zsh
-source ~/Repos/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-source ~/Repos/ohmyzsh/plugins/copyfile/copyfile.plugin.zsh
 
 # --- FZF Setup ---
 plugins=(git fzf copyfile)
@@ -91,6 +80,18 @@ alias vf='nvim $(fzf --preview="bat --color=always {}")'
 alias lg='lazygit'
 alias ld='lazydocker'
 alias z...='z ../..'
+
+# --- Znap Plugin Manager ---
+[[ -r ~/Repos/znap/znap.zsh ]] || \
+    git clone --depth 1 -- https://github.com/marlonrichert/zsh-snap.git ~/Repos/znap
+source ~/Repos/znap/znap.zsh
+
+# --- Zsh Plugins ---
+source ~/Repos/zsh-autocomplete/zsh-autocomplete.plugin.zsh
+source ~/Repos/zsh-autoswitch-virtualenv/autoswitch_virtualenv.plugin.zsh
+source ~/Repos/clipboard.zsh
+source ~/Repos/ohmyzsh/plugins/copyfile/copyfile.plugin.zsh
+source ~/Repos/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # --- Welcome Message ---
 # echo "Welcome back 🚀!"
