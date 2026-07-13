@@ -21,6 +21,7 @@ github-cli
 gnome-keyring
 iwd
 jdk8-openjdk
+jujutsu-git
 jq
 lazydocker
 lazygit
