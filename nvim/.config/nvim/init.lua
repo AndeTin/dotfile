@@ -436,7 +436,7 @@ require('lazy').setup({
         },
       }
       require('telescope').load_extension 'harpoon'
-      require('telescope').load_extension 'remote-sshfs'
+
       vim.keymap.set('n', '<leader>hh', function()
         require('telescope').extensions.harpoon.marks()
       end, { desc = 'Telescope Harpoon marks' })
