@@ -8,6 +8,11 @@ use = "vmikk/zless-preview"
 rev = "2e13623"
 hash = "3d18460218b449fb12b11dadcd185ffa"
 
+[[plugin.deps]]
+use = "TD-Sky/sudo"
+rev = "afd61ce"
+hash = "d390cd2d8b996939a695411b446f58d0"
+
 [[flavor.deps]]
 use = "Chromium-3-Oxide/everforest-medium"
 rev = "0158f0f"

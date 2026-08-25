@@ -23,3 +23,50 @@ on   = [ "g", "p" ]
 run  = "cd ~/Pictures/"
 desc = "Go to Pictures"
 
+# sudo paste (for both copy and move)
+[[mgr.prepend_keymap]]
+on   = ["S", "p"]
+run  = "plugin sudo -- paste"
+desc = "Sudo paste"
+
+# sudo paste --force (overwrite)
+[[mgr.prepend_keymap]]
+on   = ["S", "P"]
+run  = "plugin sudo -- paste --force"
+desc = "Sudo paste (force)"
+
+# sudo rename
+[[mgr.prepend_keymap]]
+on   = ["S", "r"]
+run  = "plugin sudo -- rename"
+desc = "Sudo rename"
+
+# sudo ln -s (absolute-path symlink)
+[[mgr.prepend_keymap]]
+on   = ["S", "l"]
+run  = "plugin sudo -- args=link"
+desc = "Sudo link (absolute)"
+
+# sudo ln -s (relative-path symlink)
+[[mgr.prepend_keymap]]
+on   = ["S", "L"]
+run  = "plugin sudo -- args='link --relative'"
+desc = "Sudo link (relative)"
+
+# sudo ln (hardlink)
+[[mgr.prepend_keymap]]
+on   = ["S", "h"]
+run  = "plugin sudo -- args=hardlink"
+desc = "Sudo hardlink"
+
+# sudo remove (permanently delete)
+[[mgr.prepend_keymap]]
+on   = ["S", "d"]
+run  = "plugin sudo -- remove"
+desc = "Sudo remove"
+
+# sudo remove --force
+[[mgr.prepend_keymap]]
+on   = ["S", "D"]
+run  = "plugin sudo -- remove --force"
+desc = "Sudo remove (force)"
