@@ -2,3 +2,13 @@
 [[plugin.prepend_previewers]]
 mime = "application/{*zip,tar,bzip2,7z*,rar,xz,zstd,java-archive}"
 run  = "ouch"
+
+[opener]
+evince = [
+  { run = "evince %s", orphan = true, desc = "Open with evince" }
+]
+
+[open]
+prepend_rules = [
+  { mime = "application/pdf", use = "evince" }
+]

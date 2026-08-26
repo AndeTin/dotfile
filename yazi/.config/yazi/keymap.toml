@@ -70,3 +70,9 @@ desc = "Sudo remove"
 on   = ["S", "D"]
 run  = "plugin sudo -- remove --force"
 desc = "Sudo remove (force)"
+
+# open PDF with evince
+[[mgr.prepend_keymap]]
+on   = ["o"]
+run  = "open --hovered"
+desc = "Open hovered file"
