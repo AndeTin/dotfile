@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "id": "local.cpu-usage",
+  "name": "CPU usage",
+  "version": "1.0.0",
+  "author": "Local",
+  "license": "MIT",
+  "description": "Live CPU usage in the Omarchy bar",
+  "kinds": ["bar-widget"],
+  "entryPoints": { "barWidget": "Panel.qml" },
+  "barWidget": {
+    "displayName": "CPU usage",
+    "description": "Shows current CPU usage",
+    "category": "System",
+    "allowMultiple": false,
+    "defaultSection": "right"
+  }
+}
