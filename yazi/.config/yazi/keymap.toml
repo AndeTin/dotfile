@@ -76,3 +76,15 @@ desc = "Sudo remove (force)"
 on   = ["o"]
 run  = "open --hovered"
 desc = "Open hovered file"
+
+# open PDF with onlyoffice (Shift+Enter)
+[[mgr.prepend_keymap]]
+on   = ["<S-Enter>"]
+run  = "shell -- flatpak run org.onlyoffice.desktopeditors %h >/dev/null 2>&1 &"
+desc = "Open with onlyoffice"
+
+# open with interactive menu (choose opener)
+[[mgr.prepend_keymap]]
+on   = ["O"]
+run  = "open --interactive --hovered"
+desc = "Open with interactive menu"

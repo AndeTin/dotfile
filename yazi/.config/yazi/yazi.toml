@@ -7,8 +7,12 @@ run  = "ouch"
 evince = [
   { run = "evince %s", orphan = true, desc = "Open with evince" }
 ]
+onlyoffice = [
+  { run = "flatpak run org.onlyoffice.desktopeditors %s", orphan = true, desc = "Open with onlyoffice" }
+]
 
 [open]
 prepend_rules = [
-  { mime = "application/pdf", use = "evince" }
+  { url = "*.pdf", use = ["evince", "onlyoffice"] },
+  { mime = "application/pdf", use = ["evince", "onlyoffice"] }
 ]
